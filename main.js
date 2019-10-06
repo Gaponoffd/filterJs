@@ -10,6 +10,20 @@ select.addEventListener('click', function(){
 
 createOptionsItem()
 
+optionsList.addEventListener('click', function(event){
+    
+  let target = event.target;
+
+  if(target.classList.contains('options__item')){
+
+    let optionItemText = target.innerHTML;
+
+    fiterElement(document.querySelectorAll('[data-year]'), optionItemText)
+
+  }
+
+})
+
 function createOptionsItem(){
 
   let yearsArr = new Set();
@@ -17,7 +31,9 @@ function createOptionsItem(){
   for(let i = 0; i < tableDates.length; i++){
     let yearTable = tableDates[i].innerHTML.slice(-4);
 
-    yearsArr.add(yearTable)
+    yearsArr.add(yearTable);
+ 
+    tableDates[i].closest('.item-table').setAttribute('data-year', yearTable)
   }
 
   for(let yearsOptions of yearsArr){
@@ -26,48 +42,33 @@ function createOptionsItem(){
     optionsItem.classList = 'options__item';
     optionsItem.innerHTML = yearsOptions;
     optionsList.append(optionsItem);
-
-    console.log(optionsItem)
+    
   }
 
 }
 
+function fiterElement(elements, value){
 
-// let selectList = document.querySelector('.select-list');
-// let descItems = document.querySelectorAll('.desc-item');
+  for(let j = 0; j < elements.length; j++){
 
-// selectList.addEventListener('click', function(event){
-    
-//   let target = event.target;
+    let dataYear =  elements[j].getAttribute('data-year');
 
-//   if(target.classList.contains('select-item')){
+    if(value == "все"){
 
-//     let selectItemText = target.innerHTML;
+      elements[j].style.display = "flex";
 
-//     if(selectItemText !== 'все'){
-        
-//       for(let i = 0; i < descItems.length; i++){
+    }else if(dataYear != value){
 
-//         let descItemAttr = descItems[i].getAttribute('data-year');    
-            
-//         if(descItemAttr != selectItemText){
-//             descItems[i].style.display = 'none';
-//         } else {
-//             descItems[i].style.display = 'block';
-//         }
-          
-//       }
+      elements[j].style.display = "none";
 
-//     } else {
+    } else {
 
-//       for(let i = 0; i < descItems.length; i++){
-//         descItems[i].style.display = 'block';
-//       }
-      
-//     }
+      elements[j].style.display = "flex";
 
-//   }
+    }
 
-// })
+  }
+
+}
 
 
